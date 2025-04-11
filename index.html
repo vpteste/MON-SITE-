@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon CV</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Ajout des bibliothèques nécessaires pour PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+</head>
+<body>
+    <!-- Ajout de la palette de personnalisation -->
+    
+    <div id="customization-panel" class="customization-panel">
+    <div class="panel-header">
+        <i class="fa fa-paint-brush"></i> Personnalisation
+    </div>
+    <div class="color-picker">
+        <label>Couleur du texte:</label>
+        <input type="color" id="textColor" onchange="updateTextColor(this.value)">
+    </div>
+    <div class="color-picker">
+        <label>Couleur des titres:</label>
+        <input type="color" id="headerColor" onchange="updateHeaderColor(this.value)">
+    </div>
+    <div class="color-picker">
+        <label>Couleur de fond des titres:</label>
+        <input type="color" id="headerBgColor" onchange="updateHeaderBgColor(this.value)">
+    </div>
+    <div class="font-size-picker">
+        <label>Taille du texte:</label>
+        <select id="fontSize" onchange="updateFontSize(this.value)">
+            <option value="12px">Petit</option>
+            <option value="16px" selected>Normal</option>
+            <option value="20px">Grand</option>
+            <option value="24px">Très grand</option>
+        </select>
+    </div>
+    <div class="font-picker">
+        <label>Police :</label>
+        <select id="fontSelect" onchange="updateFont(this.value)">
+            <option value="Arial">Arial</option>
+            <option value="Helvetica">Helvetica</option>
+            <option value="Times New Roman">Times New Roman</option>
+            <option value="Courier New">Courier New</option>
+            <option value="Verdana">Verdana</option>
+            <option value="Georgia">Georgia</option>
+            <option value="Palatino">Palatino</option>
+            <option value="Garamond">Garamond</option>
+            <option value="Bookman">Bookman</option>
+            <option value="Comic Sans MS">Comic Sans MS</option>
+            <option value="Trebuchet MS">Trebuchet MS</option>
+            <option value="Arial Black">Arial Black</option>
+        </select>
+    </div>
+</div>
+
+    <div class="cv-container">
+        <div class="cv-editor">
+            <h2>Profil Personnel</h2>
+            <textarea id="profil" placeholder="Votre profil personnel..."></textarea>
+            <div class="sub-menu">
+                <button class="subnavbtn" onclick="openModal('coordonneesModal')">Coordonnées <i class="fa fa-caret-down"></i></button>
+                <div id="coordonneesModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close" onclick="closeModal('coordonneesModal')">&times;</span>
+                        <h2>Coordonnées</h2>
+                        <div class="contact-info">
+                            <i class="fa fa-phone"></i> <textarea id="telephone" placeholder="Téléphone..."></textarea>
+                        </div>
+                        <div class="contact-info">
+                            <i class="fa fa-envelope"></i> <textarea id="email" placeholder="E-mail..."></textarea>
+                        </div>
+                        <div class="contact-info">
+                            <i class="fa fa-map-marker"></i> <textarea id="localisation" placeholder="Localisation..."></textarea>
+                        </div>
+                        <button onclick="saveCoordonnées()">Valider</button>
+                    </div>
+                </div>
+            </div>
+
+            <h2>Compétences</h2>
+            <textarea id="competences" placeholder="Vos compétences..." oninput="handleNewLine(this)"></textarea>
+
+            <h2>Expérience</h2>
+            <textarea id="experience" placeholder="Votre expérience professionnelle..." oninput="handleNewLine(this)"></textarea>
+
+            <h2>Formations</h2>
+            <textarea id="formations" placeholder="Vos formations..." oninput="handleNewLine(this)"></textarea>
+
+            <h2>Hobbies</h2>
+            <textarea id="hobbies" placeholder="Vos hobbies..." oninput="handleNewLine(this)"></textarea>
+
+            <div class="photo-upload">
+                <label for="photo">Ajouter une photo :</label>
+                <input type="file" id="photo" accept="image/*" onchange="previewImage(event)">
+            </div>
+            <div class="download-buttons">
+    <button onclick="generatePDF()" class="download-button">
+        <i class="fa fa-file-pdf-o"></i> Télécharger en PDF
+    </button>
+    <button onclick="generateWord()" class="download-button">
+        <i class="fa fa-file-word-o"></i> Télécharger en Word
+    </button>
+</div>
+
+        </div>
+        <div class="cv-preview">
+            <h1>Aperçu en Temps Réel</h1>
+            <div id="preview-content"></div>
+        </div>
+    </div>
+    <div class="page-break"></div>
+    <script src="app.js"></script>
+</body>
+</html>
